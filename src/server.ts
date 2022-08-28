@@ -39,7 +39,7 @@ import { filter } from 'bluebird';
       return;
     } else {
         await filterImageFromURL(image_url).then(function (image_filtered_path) {
-          res.sendFile(image_filtered_path, () => {  //send the resulting filtered file in the response
+          res.sendFile(image_filtered_path, () => {  //send the resulting filtered image file in the response
             deleteLocalFiles([image_filtered_path]);  // deletes any files on the server on finish of the response
           });
         }).catch(function(error) {
