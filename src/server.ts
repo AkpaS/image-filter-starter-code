@@ -1,6 +1,7 @@
-import express from 'express';
+import express, { response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { filter } from 'bluebird';
 
 (async () => {
 
@@ -28,6 +29,24 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
   /**************************************************************************** */
+  
+  //Validating the image_url
+  app.get("/filteredimage", async (req, res) => {
+    const image_url = req.query.image_url;
+
+    if (!image_url) {
+      res.status(400).send({message: "Image URL not provided!"});
+      return;
+    } else {
+        await filterImageFromURL(image_url).then(function (image_filtered_path) {
+          res.sendFile(image_filtered_path, () => {
+            deleteLocalFiles([image_filtered_path]);
+          });
+        }).catch(function(error) {
+          res.status(422).send({message: "Image cannot be filtered! Provided valid Image URL."});
+        });
+      } 
+    });
 
   //! END @TODO1
   
