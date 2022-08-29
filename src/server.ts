@@ -32,14 +32,14 @@ import { filter } from 'bluebird';
   
   //Validating the image_url
   app.get("/filteredimage", async (req, res) => {
-    const image_url = req.query.image_url;
+    let image_url: string = req.query.image_url;
 
     if (!image_url) {
       res.status(400).send({message: "Image URL not provided!"}); 
       return;
     } else {
         await filterImageFromURL(image_url).then(function (image_filtered_path) {
-          res.sendFile(image_filtered_path, () => {  //send the resulting filtered image file in the response
+          res.status(200).sendFile(image_filtered_path, () => {  //send the resulting filtered image file in the response
             deleteLocalFiles([image_filtered_path]);  // deletes any files on the server on finish of the response
           });
         }).catch(function(error) {
