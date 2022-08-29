@@ -44,6 +44,7 @@ Prevent requests without valid authentication headers.
 
 ### Custom Domain Name
 The Image filter can be found here: http://udagram-image-filter-dev222222.us-east-1.elasticbeanstalk.com/ 
+The Repository containing the solved Udagram Image Filter Code can be found here: https://github.com/AkpaS/image-filter-starter-code
 
 Add your own domain name and have it point to the running services (try adding a subdomain name to point to the processing server)
 
